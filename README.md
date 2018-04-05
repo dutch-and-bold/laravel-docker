@@ -76,7 +76,7 @@ docker create \
 
 ## Laravel
 
-This package was made to work for Laravel out of the box. It supports features such as a supervised queue or
+This package is made to work for Laravel out of the box. It supports features such as a supervised queue or
 the scheduler out of the box.
 
 ### Queue Worker
@@ -88,7 +88,7 @@ To enable the queue worker you only have to set an environment variable.
 |--------------------|-------------|---------------------------|
 |`WORKER_NUMPROCS`   |0            |Number of workers          |
 |`WORKER_SLEEP`      |3            |Sleep between jobs         |
-|`WORKER_TRIES`      |0            |Max attempts if a job fails|
+|`WORKER_TRIES`      |3            |Max attempts if a job fails|
 |`WORKER_TIMEOUT`    |60           |Timeout for frozen jobs    |
 
 More info at [Laravel docs | Queues](https://laravel.com/docs/5.6/queues)
