@@ -31,9 +31,11 @@ RUN apt-get install -y \
         libxslt-dev \
         cron
 
-RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache
+RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
 RUN pecl install mcrypt-1.0.1
 RUN docker-php-ext-enable mcrypt
+
+#COPY config/php.ini /usr/local/etc/php/
 
 # Install composer
 
@@ -57,11 +59,11 @@ RUN chown www-data:www-data /web
 
 # Setup supervisord config
 
-COPY config/supervisord.conf /config/supervisord.conf
+COPY config/supervisord.conf /config/
 
 # Setup PHP FPM config
 
-COPY config/php-fpm.conf /config/php-fpm.conf
+COPY config/php-fpm.conf /config/
 
 # Copy default nginx config
 
