@@ -67,7 +67,7 @@ volumes:
 Using docker is also a nice basic method to get your files up and running quickly.
 
 ```bash
-docker create \
+docker run \
     --name=example \
     -v ./:/web \
     -p 80:80 \
