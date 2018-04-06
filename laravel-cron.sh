@@ -1,5 +1,5 @@
 #!/bin/bash
 
 if [ -f /web/artisan ]; then
-    php /web/artisan schedule:run
+    /usr/local/bin/php /web/artisan schedule:run
 fi

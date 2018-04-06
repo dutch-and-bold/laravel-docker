@@ -72,7 +72,7 @@ COPY config/nginx-default.conf /etc/nginx/sites-available/default
 COPY laravel-cron.sh /laravel-cron.sh
 RUN chown www-data:www-data /laravel-cron.sh \
     && chmod a+x /laravel-cron.sh
-RUN echo '* * * * * /laraval-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
+RUN echo '* * * * * /laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
     && crontab -u www-data /tmp/crontab.tmp \
     && rm -rf /tmp/crontab.tmp
 
