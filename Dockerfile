@@ -1,12 +1,12 @@
 FROM php:7.2-fpm
 
+LABEL maintainer="Dylan Lamers <dylan@dutchandbold.com>"
+
 ENV WORKER_SLEEP 3
 ENV WORKER_TRIES 3
 ENV WORKER_TIMEOUT 60
 ENV WORKER_NUMPROCS 0
 ENV NGINX_VERSION 1.10.3-1+deb9u1
-
-LABEL maintainer="Dylan Lamers <dylan@dutchandbold.com>"
 
 # Update package repositories
 
@@ -35,7 +35,11 @@ RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache
 RUN pecl install mcrypt-1.0.1
 RUN docker-php-ext-enable mcrypt
 
-#COPY config/php.ini /usr/local/etc/php/
+ENV PHP_MEMORY_LIMIT 128M
+ENV PHP_POST_MAX_SIZE 8M
+ENV PHP_UPLOAD_MAX_FILESIZE 2M
+
+COPY config/php.ini /usr/local/etc/php/
 
 # Install composer
 

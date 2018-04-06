@@ -10,9 +10,21 @@ This docker image is maintained by two enthusiastic dutch companies.
 - [Dutch & Bold](https://www.dutchandbold.com) - Rotterdam, the Netherlands
 - [Webbits](https://www.webbits.nl) - Rijswijk, the Netherlands
 
-## Dockerfile
+## Docker
 
-For production this is the prefered method. Use this image in your docker file and COPY your project's files into 
+Using docker run is a nice basic method to get your files up and running quickly.
+
+```bash
+docker run \
+    --name=example \
+    -v ./:/web \
+    -p 80:80 \
+    dutchandbold/laravel-docker
+```
+
+### Dockerfile
+
+For production this is the preferred method. Use this image in your docker file and COPY your project's files into 
 the container.
 
 For example:
@@ -26,7 +38,7 @@ COPY . /web
 RUN composer install -d /web
 ```
 
-## Docker-compose
+### Docker-compose
 
 For development this might be the best method to run your project. You can use this image and mount your files into it.
 
@@ -41,6 +53,8 @@ services:
     restart: always
     volumes:
       - ./:/web
+    environment:
+      DB_HOST: db
     links:
       - db
     depends_on:
@@ -60,18 +74,6 @@ services:
       MYSQL_ROOT_PASSWORD: 'secret'
 volumes:
   mysql-data:
-```
-
-## Docker
-
-Using docker is also a nice basic method to get your files up and running quickly.
-
-```bash
-docker run \
-    --name=example \
-    -v ./:/web \
-    -p 80:80 \
-    dutchandbold/laravel-docker
 ```
 
 ## Laravel
@@ -96,3 +98,23 @@ More info at [Laravel docs | Queues](https://laravel.com/docs/5.6/queues)
 ### Scheduler
 
 The laravel scheduler runs by default if artisan exists in the `/web` folder
+
+## PHP
+
+This image is based on the official PHP image PHP7.2-fpm.
+
+### Configuration
+
+One option to configure php is to overwrite the php.ini like so:
+
+```
+COPY php.ini /usr/local/etc/php/
+```
+
+But we have also made some options available through environment variables.
+
+|Environment variable     |Default value|Description                |
+|-------------------------|-------------|---------------------------|
+|`PHP_MEMORY_LIMIT`       |128M         |memory_limit               |
+|`PHP_POST_MAX_SIZE`      |8M           |post_max_size              |
+|`PHP_UPLOAD_MAX_FILESIZE`|2M           |upload_max_filesize        |
