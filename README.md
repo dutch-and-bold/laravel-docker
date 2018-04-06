@@ -32,10 +32,11 @@ For example:
 ```dockerfile
 FROM dutchandbold/laravel-docker:latest
 
-ENV WORKER_NUMPROCS 1
+ENV APP_ENV production
 
 COPY . /web
-RUN composer install -d /web
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction -d /web
 ```
 
 ### Docker-compose
@@ -107,7 +108,7 @@ This image is based on the official PHP image PHP7.2-fpm.
 
 One option to configure php is to overwrite the php.ini like so:
 
-```
+```dockerfile
 COPY php.ini /usr/local/etc/php/
 ```
 
@@ -118,3 +119,16 @@ But we have also made some options available through environment variables.
 |`PHP_MEMORY_LIMIT`       |128M         |memory_limit               |
 |`PHP_POST_MAX_SIZE`      |8M           |post_max_size              |
 |`PHP_UPLOAD_MAX_FILESIZE`|2M           |upload_max_filesize        |
+
+## NGINX
+
+### Configuration
+
+The default configuration probably suits most use cases. But you can always supply your own. Just copy it to:
+```
+/etc/nginx/sites-available/
+```
+or overwrite the default
+```dockerfile
+COPY nginx.conf /etc/nginx/sites-available/default
+```
