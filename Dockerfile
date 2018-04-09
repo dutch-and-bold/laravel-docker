@@ -76,7 +76,9 @@ COPY config/php-fpm.conf /config/
 
 # Copy scripts
 
-COPY --chown=www-data scripts /scripts
+COPY scripts /scripts
+
+RUN chown -Rf www-data:www-data /scripts
 
 # Copy default nginx config
 
