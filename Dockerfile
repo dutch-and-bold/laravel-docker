@@ -8,6 +8,8 @@ ENV WORKER_TIMEOUT 60
 ENV WORKER_NUMPROCS 0
 ENV NGINX_VERSION 1.10.3-1+deb9u1
 
+WORKDIR /web
+
 # Update package repositories
 
 RUN apt-get update
@@ -72,16 +74,18 @@ COPY config/supervisord.conf /config/
 
 COPY config/php-fpm.conf /config/
 
+# Copy scripts
+
+COPY --chown=www-data scripts /scripts
+
 # Copy default nginx config
 
 COPY config/nginx-default.conf /etc/nginx/sites-available/default
 
 # Laravel Scheduler
 
-COPY laravel-cron.sh /laravel-cron.sh
-RUN chown www-data:www-data /laravel-cron.sh \
-    && chmod a+x /laravel-cron.sh
-RUN echo '* * * * * /laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
+RUN chmod a+x /scripts/laravel-cron.sh
+RUN echo '* * * * * /scripts/laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
     && crontab -u www-data /tmp/crontab.tmp \
     && rm -rf /tmp/crontab.tmp
 
@@ -89,6 +93,6 @@ RUN echo '* * * * * /laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
 
 EXPOSE 443 80
 
-# Run supervisor
+# Run supervisor and deploy script
 
-CMD ["supervisord", "-n", "-c", "/config/supervisord.conf"]
+CMD supervisord -n -c /config/supervisord.conf ; su - www-data -s /scripts/deployed.sh

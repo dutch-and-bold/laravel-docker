@@ -30,15 +30,13 @@ the container.
 For example:
 
 ```dockerfile
-FROM laravel-docker
-
-USER www-data
+FROM dutchandbold/laravel-docker
 
 ENV APP_ENV production
 
 COPY --chown=www-data . /web
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction -d /web
+RUN su - www-data -s /bin/bash -c "composer install --no-dev --optimize-autoloader --no-interaction -d /web"
 ```
 
 ### Docker-compose
@@ -134,3 +132,17 @@ or overwrite the default
 ```dockerfile
 COPY nginx.conf /etc/nginx/sites-available/default
 ```
+
+## Deploy script
+
+By default the deploy script just runs the migrations if artisan is available. 
+
+### Custom script
+
+You can overwrite this script, for example:
+
+```dockerfile
+COPY script.sh /scripts/deployed.sh
+```
+
+The working dir for this script is `/web` and the user is `www-data`
