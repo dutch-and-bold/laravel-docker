@@ -30,11 +30,13 @@ the container.
 For example:
 
 ```dockerfile
-FROM dutchandbold/laravel-docker:latest
+FROM laravel-docker
+
+USER www-data
 
 ENV APP_ENV production
 
-COPY . /web
+COPY --chown=www-data . /web
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction -d /web
 ```
