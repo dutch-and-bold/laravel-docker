@@ -120,6 +120,21 @@ But we have also made some options available through environment variables.
 |`PHP_POST_MAX_SIZE`      |8M           |post_max_size              |
 |`PHP_UPLOAD_MAX_FILESIZE`|2M           |upload_max_filesize        |
 
+
+## Xdebug
+
+This functionality is built in. But if not enabled. It won't be loaded.
+Xdebug can be setup by environment variables
+
+|Environment variable           |Default value                      |Description                |
+|-------------------------------|-----------------------------------|---------------------------|
+|`XDEBUG_REMOTE_ENABLE`         |0                                  |This enables xdebug        |
+|`XDEBUG_REMOTE_AUTOSTART`      |0                                  |Autostart                  |
+|`XDEBUG_REMOTE_PORT`           |9000                               |Remote port                |
+|`XDEBUG_REMOTE_HOST`           |localhost                          |Remote host                |
+|`XDEBUG_PROFILER_ENABLE`       |0                                  |This enables the profiler  |
+|`XDEBUG_PROFILER_OUTPUT_DIR`   |/web/storage/logs/xdebug/profiler  |Change the default dir     |
+
 ## NGINX
 
 ### Configuration

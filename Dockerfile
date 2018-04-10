@@ -34,8 +34,8 @@ RUN apt-get install -y \
         cron
 
 RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
-RUN pecl install mcrypt-1.0.1
-RUN docker-php-ext-enable mcrypt
+RUN pecl install mcrypt-1.0.1 xdebug
+RUN docker-php-ext-enable mcrypt xdebug
 
 ENV PHP_MEMORY_LIMIT 128M
 ENV PHP_POST_MAX_SIZE 8M
@@ -90,10 +90,25 @@ RUN echo '* * * * * /scripts/laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.
     && crontab -u www-data /tmp/crontab.tmp \
     && rm -rf /tmp/crontab.tmp
 
+# Xdebug setup
+
+ENV XDEBUG_REMOTE_ENABLE 0
+ENV XDEBUG_REMOTE_HOST localhost
+ENV XDEBUG_REMOTE_AUTOSTART 0
+ENV XDEBUG_REMOTE_PORT 9000
+ENV XDEBUG_PROFILER_ENABLE 0
+ENV XDEBUG_PROFILER_OUTPUT_DIR /web/storage/logs/xdebug/profiler
+
+COPY /config/php-xdebug.ini /tmp/
+RUN cat /tmp/php-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && rm /tmp/php-xdebug.ini
+
+RUN mkdir -p /web/storage/logs/xdebug/profiler
+
 # Expose http and https ports
 
 EXPOSE 443 80
 
 # Run supervisor and deploy script
 
-CMD supervisord -n -c /config/supervisord.conf ; su - www-data -s /scripts/deployed.sh
+CMD ["/scripts/boot.sh"]
