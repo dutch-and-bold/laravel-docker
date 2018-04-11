@@ -86,7 +86,7 @@ COPY config/nginx-default.conf /etc/nginx/sites-available/default
 
 # Laravel Scheduler
 
-RUN echo '* * * * * /scripts/laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
+RUN echo '* * * * * . /etc/environment; /scripts/laravel-cron.sh >> /dev/null 2>&1' >> /tmp/crontab.tmp \
     && crontab -u www-data /tmp/crontab.tmp \
     && rm -rf /tmp/crontab.tmp
 

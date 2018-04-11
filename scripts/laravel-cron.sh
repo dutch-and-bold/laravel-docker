@@ -1,5 +1,7 @@
 #!/bin/bash
 
-if [ -f /web/artisan ]; then
-    /usr/local/bin/php /web/artisan schedule:run
+cd /web
+
+if [ -f artisan ]; then
+    /usr/local/bin/php artisan schedule:run
 fi
