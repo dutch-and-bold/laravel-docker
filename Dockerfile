@@ -18,11 +18,7 @@ RUN apt-get update
 
 RUN apt-get install -y nginx=$NGINX_VERSION
 
-# Install supervisord
-
-RUN apt-get install -y supervisor
-
-# Setup php with extensions
+# Install php dependencies
 
 RUN apt-get install -y \
         libfreetype6-dev \
@@ -31,7 +27,15 @@ RUN apt-get install -y \
         libpng-dev \
         libicu-dev \
         libxslt-dev \
-        cron
+        locales
+
+# Setup locales
+
+RUN  touch /usr/share/locale/locale.alias;
+COPY config/locale.gen /etc/
+RUN  locale-gen
+
+# Setup php with extensions
 
 RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
 RUN pecl install mcrypt-1.0.1 xdebug
@@ -42,6 +46,12 @@ ENV PHP_POST_MAX_SIZE 8M
 ENV PHP_UPLOAD_MAX_FILESIZE 2M
 
 COPY config/php.ini /usr/local/etc/php/
+
+# Install dependencies
+
+RUN apt-get install -y \
+        supervisor \
+        cron
 
 # Install composer
 
@@ -79,6 +89,10 @@ COPY config/php-fpm.conf /config/
 COPY scripts /scripts
 
 RUN chown -Rf www-data:www-data /scripts
+
+# Copy tools
+
+COPY /tools/add-locale /usr/local/bin
 
 # Copy default nginx config
 

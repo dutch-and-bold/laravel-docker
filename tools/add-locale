@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for locale in "$@"; do
+  sed -i "s/^# *\($locale\)/\1/" /etc/locale.gen
+done
+
+locale-gen

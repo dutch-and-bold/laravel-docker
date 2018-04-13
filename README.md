@@ -4,6 +4,25 @@ This image provides an plug-and-play environment for your Laravel application to
 The image can be used for production in a Dockerfile, but also can be ran with docker run or docker-compose for 
 your development environments.
 
+# Table of contents
+
+- [Laravel-Docker](#laravel-docker)
+  * [Maintainers](#maintainers)
+  * [Docker](#docker)
+    + [Dockerfile](#dockerfile)
+    + [Docker-compose](#docker-compose)
+  * [Laravel](#laravel)
+    + [Queue Worker](#queue-worker)
+    + [Scheduler](#scheduler)
+  * [PHP](#php)
+    + [Configuration](#configuration)
+  * [Xdebug](#xdebug)
+  * [NGINX](#nginx)
+    + [Configuration](#configuration-1)
+  * [Deploy script](#deploy-script)
+    + [Custom script](#custom-script)
+  * [Locales](#locales)
+
 ## Maintainers
 
 This docker image is maintained by two enthusiastic dutch companies.
@@ -161,3 +180,13 @@ COPY script.sh /scripts/deployed.sh
 ```
 
 The working dir for this script is `/web` and the user is `www-data`
+
+## Locales
+
+This image comes preinstalled with the en_US locales. To add extra locales we have added a simple command to do so.
+You can call `add-locale` with the installable locales as arguments at any point. But preferably in your Dockerfile.
+
+For example:
+```dockerfile
+RUN add-locale nl_NL es_ES it_IT
+```
