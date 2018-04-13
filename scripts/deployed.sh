@@ -3,5 +3,5 @@
 echo "$(date) [deployed.sh] Running deploy script"
 
 if [ -f artisan ]; then
-    php artisan migrate
+    php artisan migrate --force
 fi
