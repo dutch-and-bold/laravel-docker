@@ -27,7 +27,8 @@ RUN apt-get install -y \
         libpng-dev \
         libicu-dev \
         libxslt-dev \
-        locales
+        locales \
+        gettext
 
 # Setup locales
 
@@ -96,7 +97,14 @@ COPY /tools/add-locale /usr/local/bin
 
 # Copy default nginx config
 
-COPY config/nginx-default.conf /etc/nginx/sites-available/default
+ENV NGINX_GZIP_ENABLED on
+ENV NGINX_ASSETS_EXPIRE_IN 14d
+ENV NGINX_SERVER_NAME _
+ENV NGINX_LISTEN 80 default_server
+
+COPY config/nginx-default.conf /config/
+RUN envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN}' \
+    < /config/nginx-default.conf > /etc/nginx/sites-available/default
 
 # Laravel Scheduler
 

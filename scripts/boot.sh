@@ -12,6 +12,11 @@ if [ "$XDEBUG_REMOTE_ENABLE" == 0 ]; then
     echo "$(date) [laravel-docker] Removed xdebug config"
 fi
 
+# Set NGINX conf env variables
+
+envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN}' \
+          < /config/nginx-default.conf > /etc/nginx/sites-available/default
+
 # Run deploy script
 
 runuser -u www-data "/scripts/deployed.sh"

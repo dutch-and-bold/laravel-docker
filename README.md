@@ -112,6 +112,7 @@ To enable the queue worker you only have to set an environment variable.
 |`WORKER_SLEEP`      |3            |Sleep between jobs         |
 |`WORKER_TRIES`      |3            |Max attempts if a job fails|
 |`WORKER_TIMEOUT`    |60           |Timeout for frozen jobs    |
+|`QUEUE_DRIVER`      |             |Same as Laravel            |
 
 More info at [Laravel docs | Queues](https://laravel.com/docs/5.6/queues)
 
@@ -166,6 +167,17 @@ or overwrite the default
 ```dockerfile
 COPY nginx.conf /etc/nginx/sites-available/default
 ```
+
+When using the default, there are some configuration options. These will only be applied at boot.
+
+|Environment variable           |Default value                      |Description                |
+|-------------------------------|-----------------------------------|---------------------------|
+|`NGINX_GZIP_ENABLED`           |on                                 |Switches GZIP              |
+|`NGINX_ASSETS_EXPIRE_IN`       |14d                                |Set an expiry on assets    |
+|`NGINX_SERVER_NAME`            |_                                  |Server name                |
+|`NGINX_LISTEN`                 |80 default_server                  |Listening on this port     |
+
+For more information reference the nginx documentation located at [http://nginx.org/en/docs/](http://nginx.org/en/docs/)
 
 ## Deploy script
 
