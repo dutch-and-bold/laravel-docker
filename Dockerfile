@@ -127,6 +127,11 @@ RUN cat /tmp/php-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.i
 
 RUN mkdir -p /web/storage/logs/xdebug/profiler
 
+# Cleanup build depedencies
+
+RUN apt-get purge '*-dev' -y
+RUN apt-get autoremove -y
+
 # Expose http and https ports
 
 EXPOSE 443 80
