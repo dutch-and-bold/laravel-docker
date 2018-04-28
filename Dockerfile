@@ -51,6 +51,7 @@ COPY config/php.ini /usr/local/etc/php/
 # Install dependencies
 
 RUN apt-get install -y \
+        mcrypt \
         supervisor \
         cron
 
