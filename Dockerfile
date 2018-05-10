@@ -108,9 +108,9 @@ ENV NGINX_SSL_CERTIFICATE_KEY /config/ssl/privkey.pem
 ENV NGINX_SSL_PROTOCOLS TLSv1 TLSv1.1 TLSv1.2
 ENV NGINX_SSL_CIPHERS HIGH:!aNULL:!MD5
 
+RUN mkdir /config/ssl
+
 COPY config/nginx-default.conf /config/
-RUN envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN}' \
-    < /config/nginx-default.conf > /etc/nginx/sites-available/default
 
 # Laravel Scheduler
 
