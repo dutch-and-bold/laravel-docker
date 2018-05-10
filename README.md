@@ -176,6 +176,11 @@ When using the default, there are some configuration options. These will only be
 |`NGINX_ASSETS_EXPIRE_IN`       |14d                                |Set an expiry on assets    |
 |`NGINX_SERVER_NAME`            |_                                  |Server name                |
 |`NGINX_LISTEN`                 |80 default_server                  |Listening on this port     |
+|`NGINX_SSL`                    |off;                               |Turn SSL on/off            |
+|`NGINX_SSL_CERTIFICATE`        |/config/ssl/fullchain.pem;         |SSL Certificate            |
+|`NGINX_SSL_CERTIFICATE_KEY`    |/config/ssl/privkey.pem;           |SSL Key                    |
+|`NGINX_SSL_PROTOCOLS`          |TLSv1 TLSv1.1 TLSv1.2;             |SSL Protocols              |
+|`NGINX_SSL_CIPHERS`            |HIGH:!aNULL:!MD5;                  |SSL Ciphers                |
 
 For more information reference the nginx documentation located at [http://nginx.org/en/docs/](http://nginx.org/en/docs/)
 

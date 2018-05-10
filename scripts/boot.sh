@@ -14,7 +14,7 @@ fi
 
 # Set NGINX conf env variables
 
-envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN}' \
+envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN} ${NGINX_SSL} ${NGINX_SSL_CERTIFICATE} ${NGINX_SSL_CERTIFICATE_KEY} ${NGINX_SSL_PROTOCOLS} ${NGINX_SSL_CIPHERS}' \
           < /config/nginx-default.conf > /etc/nginx/sites-available/default
 
 # Run deploy script
