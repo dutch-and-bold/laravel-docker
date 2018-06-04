@@ -20,7 +20,7 @@ RUN apt-get install -y nginx=$NGINX_VERSION
 
 # Install php dependencies
 
-RUN apt-get install -y \
+RUN apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
@@ -28,7 +28,9 @@ RUN apt-get install -y \
         libicu-dev \
         libxslt-dev \
         locales \
-        gettext
+        gettext \
+        libxpm-dev \
+        libvpx-dev
 
 # Setup locales
 
@@ -38,7 +40,13 @@ RUN  locale-gen
 
 # Setup php with extensions
 
-RUN docker-php-ext-install -j$(nproc) gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
+RUN docker-php-ext-configure gd \
+        --with-freetype-dir=/usr/lib/x86_64-linux-gnu/ \
+        --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/ \
+        --with-xpm-dir=/usr/lib/x86_64-linux-gnu/ \
+        --with-vpx-dir=/usr/lib/x86_64-linux-gnu/
+
+RUN docker-php-ext-install gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
 RUN pecl install mcrypt-1.0.1 xdebug
 RUN docker-php-ext-enable mcrypt xdebug
 
