@@ -46,7 +46,7 @@ RUN docker-php-ext-configure gd \
         --with-xpm-dir=/usr/lib/x86_64-linux-gnu/ \
         --with-vpx-dir=/usr/lib/x86_64-linux-gnu/
 
-RUN docker-php-ext-install gd exif intl xsl json soap dom zip opcache pdo pdo_mysql
+RUN docker-php-ext-install gd exif intl xsl json soap dom zip opcache pdo pdo_mysql bcmath
 RUN pecl install mcrypt-1.0.1 xdebug
 RUN docker-php-ext-enable mcrypt xdebug
 
