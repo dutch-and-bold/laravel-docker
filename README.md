@@ -154,6 +154,7 @@ Xdebug can be setup by environment variables
 |`XDEBUG_REMOTE_HOST`           |localhost                          |Remote host                |
 |`XDEBUG_PROFILER_ENABLE`       |0                                  |This enables the profiler  |
 |`XDEBUG_PROFILER_OUTPUT_DIR`   |/web/storage/logs/xdebug/profiler  |Change the default dir     |
+|`PHP_UPLOAD_MAX_FILESIZE`      |2M                                 |Sets client_max_body_size  |
 
 ## NGINX
 
