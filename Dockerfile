@@ -28,6 +28,7 @@ RUN apt-get install -y --no-install-recommends \
         libicu-dev \
         libxslt-dev \
         locales \
+        gettext-base \
         gettext \
         libxpm-dev \
         libvpx-dev
@@ -145,6 +146,7 @@ RUN mkdir -p /web/storage/logs/xdebug/profiler
 
 RUN apt-get purge '*-dev' -y
 RUN apt-get autoremove -y
+RUN apt-get clean
 
 # Expose http and https ports
 

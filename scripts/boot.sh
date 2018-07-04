@@ -19,12 +19,16 @@ fi
 if [ ! -f /config/ssl/fullchain.pem ]; then
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /config/ssl/privkey.pem -out /config/ssl/fullchain.pem \
     -subj '/C=US/ST=TEST/L=TEST/O=TEST/CN=localhost'
+
+    echo "$(date) [laravel-docker] Self signed SSL certificate was successfully created"
 fi
 
 ## Set env vars in nginx config
 
 envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} ${NGINX_LISTEN} ${NGINX_SSL} ${NGINX_SSL_CERTIFICATE} ${NGINX_SSL_CERTIFICATE_KEY} ${NGINX_SSL_PROTOCOLS} ${NGINX_SSL_CIPHERS} ${PHP_UPLOAD_MAX_FILESIZE}' \
           < /config/nginx-default.conf > /etc/nginx/sites-available/default
+
+echo "$(date) [laravel-docker] Set ENV vars on the default nginx config"
 
 # Run deploy script
 

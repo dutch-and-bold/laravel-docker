@@ -167,7 +167,7 @@ The default configuration probably suits most use cases. But you can always supp
 ```
 or overwrite the default
 ```dockerfile
-COPY nginx.conf /etc/nginx/sites-available/default
+COPY nginx.conf /config/nginx-default.conf
 ```
 
 When using the default, there are some configuration options. These will only be applied at boot.
