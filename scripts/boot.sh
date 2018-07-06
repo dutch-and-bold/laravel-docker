@@ -35,6 +35,23 @@ echo "$(date) [laravel-docker] Set ENV vars on the default nginx config"
 runuser -u www-data "/scripts/deployed.sh"
 echo "$(date) [laravel-docker] Ran /scripts/deployed.sh"
 
+# Create certificates
+
+if [ "$LETSENCRYPT_DOMAINS" ]; then
+    DOMAIN=$(echo $LETSENCRYPT_DOMAINS | sed -r "s/(^.*?)\-d.*$/\1/")
+
+    if [ ! -d "$CERT_HOME/$DOMAIN" ]; then
+        service nginx start
+        /acme.sh/acme.sh --issue -d $LETSENCRYPT_DOMAINS -w /web/public
+        service nginx stop
+    fi
+
+    /acme.sh/acme.sh --install-cert -d $DOMAIN \
+            --key-file       "$LETSENCRYPT_SSL_PATH/privkey.pem"   \
+            --fullchain-file "$LETSENCRYPT_SSL_PATH/fullchain.pem" \
+            --reloadcmd      "service nginx force-reload"
+fi
+
 # Run supervisor
 
 exec supervisord -n -c /config/supervisord.conf

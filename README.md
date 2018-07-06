@@ -4,6 +4,8 @@ This image provides an plug-and-play environment for your Laravel application to
 The image can be used for production in a Dockerfile, but also can be ran with docker run or docker-compose for 
 your development environments.
 
+Available on [Docker hub](https://hub.docker.com/r/dutchandbold/laravel-docker/)
+
 # Table of contents
 
 - [Laravel-Docker](#laravel-docker)
@@ -22,6 +24,7 @@ your development environments.
   * [Deploy script](#deploy-script)
     + [Custom script](#custom-script)
   * [Locales](#locales)
+  * [Letsencrypt](#letsencrypt)
 
 ## Maintainers
 
@@ -209,3 +212,17 @@ For example:
 ```dockerfile
 RUN add-locale nl_NL es_ES it_IT
 ```
+
+## Letsencrypt
+
+Support for Letsencrypt is builtin. We use the tiny acme.sh bash script to create and renew the certificates
+automatically. More information can be found here [acme.sh](https://github.com/Neilpang/acme.sh)
+Certificates are installed to `/certificates` you should bind this path to a volume and make it persistent. To prevent
+hitting the Letsencrypt rate limits.
+
+|Environment variable           |Default value                      |Description                                       |
+|-------------------------------|-----------------------------------|--------------------------------------------------|
+|`LETSENCRYPT_DOMAIN`           |                                   |The domain you want certificates for              |
+|                               |                                   |use -d for multiple domains                       |
+|                               |                                   |ex: example.com -d www.example.com                |
+|`LETSENCRYPT_CERT_PATH`        |/config/ssl/                       |where to store fullchain.pem and privkey.pem      |

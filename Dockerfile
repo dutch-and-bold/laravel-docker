@@ -64,6 +64,12 @@ RUN apt-get install -y \
         supervisor \
         cron
 
+# Cleanup build depedencies
+
+RUN apt-get purge '*-dev' -y
+RUN apt-get autoremove -y
+RUN apt-get clean
+
 # Install composer
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -116,6 +122,7 @@ ENV NGINX_SSL_CERTIFICATE /config/ssl/fullchain.pem
 ENV NGINX_SSL_CERTIFICATE_KEY /config/ssl/privkey.pem
 ENV NGINX_SSL_PROTOCOLS TLSv1 TLSv1.1 TLSv1.2
 ENV NGINX_SSL_CIPHERS HIGH:!aNULL:!MD5
+ENV LETSENCRYPT_SSL_PATH /config/ssl/
 
 RUN mkdir /config/ssl
 
@@ -142,11 +149,11 @@ RUN cat /tmp/php-xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.i
 
 RUN mkdir -p /web/storage/logs/xdebug/profiler
 
-# Cleanup build depedencies
+# acme.sh setup
 
-RUN apt-get purge '*-dev' -y
-RUN apt-get autoremove -y
-RUN apt-get clean
+ENV LE_WORKING_DIR '/acme.sh'
+ENV CERT_HOME '/certificates'
+RUN curl https://get.acme.sh | sh
 
 # Expose http and https ports
 
