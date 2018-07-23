@@ -16,7 +16,7 @@ RUN apt-get update
 
 # install nginx
 
-RUN apt-get install -y nginx=$NGINX_VERSION
+RUN apt-get install -y nginx-extras=$NGINX_VERSION
 
 # Install php dependencies
 
