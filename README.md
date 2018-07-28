@@ -216,13 +216,17 @@ RUN add-locale nl_NL es_ES it_IT
 ## Letsencrypt
 
 Support for Letsencrypt is builtin. We use the tiny acme.sh bash script to create and renew the certificates
-automatically. More information can be found here [acme.sh](https://github.com/Neilpang/acme.sh)
+automatically. More information can be found here [https://github.com/Neilpang/acme.sh](https://github.com/Neilpang/acme.sh)
 Certificates are installed to `/certificates` you should bind this path to a volume and make it persistent. To prevent
 hitting the Letsencrypt rate limits.
 
 |Environment variable           |Default value                      |Description                                       |
 |-------------------------------|-----------------------------------|--------------------------------------------------|
-|`LETSENCRYPT_DOMAIN`           |                                   |The domain you want certificates for              |
-|                               |                                   |use -d for multiple domains                       |
-|                               |                                   |ex: example.com -d www.example.com                |
-|`LETSENCRYPT_CERT_PATH`        |/config/ssl/                       |where to store fullchain.pem and privkey.pem      |
+|`LETSENCRYPT_DOMAIN`           |                                   |The domain you want certificates for.             |
+|                               |                                   |For multiple domains use `-d`                     |
+|                               |                                   |ex: `example.com -d www.example.com`              |
+|`LETSENCRYPT_CERT_PATH`        |/config/ssl/                       |Location to place the generated                   |
+|                               |                                   |`fullchain.pem` and `privkey.pem`.                |
+|                               |                                   |The certificates are created by the raw certs in  |
+|                               |                                   |`/certificates`. Therefor you should persists     |
+|                               |                                   |the `/certificates` folder                        |

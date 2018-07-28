@@ -32,6 +32,7 @@ echo "$(date) [laravel-docker] Set ENV vars on the default nginx config"
 
 # Run deploy script
 
+chown www-data:www-data /scripts/deployed.sh
 runuser -u www-data "/scripts/deployed.sh"
 echo "$(date) [laravel-docker] Ran /scripts/deployed.sh"
 
