@@ -30,6 +30,12 @@ envsubst '${NGINX_GZIP_ENABLED} ${NGINX_ASSETS_EXPIRE_IN} ${NGINX_SERVER_NAME} $
 
 echo "$(date) [laravel-docker] Set ENV vars on the default nginx config"
 
+## Add http redirect for SSL
+
+if [ "$NGINX_SSL_REDIRECT" == 1 ]; then
+    cat /config/nginx-redirect.conf >> /etc/nginx/sites-available/default
+fi
+
 # Run deploy script
 
 chown www-data:www-data /scripts/deployed.sh
