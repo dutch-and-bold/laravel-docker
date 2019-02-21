@@ -127,6 +127,7 @@ ENV LETSENCRYPT_SSL_PATH /config/ssl/
 RUN mkdir /config/ssl
 
 COPY config/nginx-default.conf /config/
+COPY config/nginx-redirect.conf /config/
 
 # Laravel Scheduler
 
